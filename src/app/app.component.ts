@@ -8,17 +8,19 @@ import { ExercisesPage } from '../pages/exercises/exercises';
 import { CategoriesPage } from '../pages/categories/categories';
 import { StatsPage } from '../pages/stats/stats';
 import { SettingsPage} from '../pages/settings/settings';
+import { TabsPage } from '../pages/tabs/tabs';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = HomePage;
+  rootPage = TabsPage;
   workoutsPage = WorkoutsPage;
   exercisesPage = ExercisesPage;
   categoriesPage = CategoriesPage;
   statsPage = StatsPage;
   settingsPage = SettingsPage;
+  tabsPage = TabsPage;
 
   @ViewChild('nav') nav: NavController;
 
