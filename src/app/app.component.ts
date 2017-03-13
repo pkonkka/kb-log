@@ -6,15 +6,19 @@ import { HomePage } from '../pages/home/home';
 import { WorkoutsPage } from '../pages/workouts/workouts';
 import { ExercisesPage } from '../pages/exercises/exercises';
 import { CategoriesPage } from '../pages/categories/categories';
+import { StatsPage } from '../pages/stats/stats';
+import { SettingsPage} from '../pages/settings/settings';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = WorkoutsPage;
+  rootPage = HomePage;
   workoutsPage = WorkoutsPage;
   exercisesPage = ExercisesPage;
   categoriesPage = CategoriesPage;
+  statsPage = StatsPage;
+  settingsPage = SettingsPage;
 
   @ViewChild('nav') nav: NavController;
 
@@ -30,7 +34,6 @@ export class MyApp {
 
   // ---------------------------------------------------------------------------------------------
   onLoad(page: any) {
-    console.log('page: ', page);
     this.nav.setRoot(page);
     this.menuCtrl.close();
   }

@@ -8,18 +8,25 @@
 
     <ion-content>
         <ion-list>
+            <button ion-item (click)="onLoad(rootPage)">
+                <ion-icon name="home" item-left></ion-icon>
+            </button>            
             <button ion-item (click)="onLoad(workoutsPage)">
-                <ion-icon name="menu" item-left></ion-icon>
                 Workouts
             </button>
             <button ion-item (click)="onLoad(exercisesPage)">
-                <ion-icon name="menu" item-left></ion-icon>
                 Exercises
             </button>            
             <button ion-item (click)="onLoad(categoriesPage)">
-                <ion-icon name="menu" item-left></ion-icon>
                 Categories
             </button>                        
+            <button ion-item (click)="onLoad(statsPage)">
+                Stats
+            </button>                        
+            <button ion-item (click)="onLoad(settingsPage)">
+                Settings
+            </button>                        
+            
         </ion-list>
     </ion-content>
 </ion-menu>
