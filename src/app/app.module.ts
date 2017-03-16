@@ -8,6 +8,9 @@ import { CategoriesPage } from '../pages/categories/categories';
 import { StatsPage } from '../pages/stats/stats';
 import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
+import { CategoryEditPage } from '../pages/category-edit/category-edit';
+import { ExerciseEditPage } from '../pages/exercise-edit/exercise-edit';
+import { WorkoutEditPage } from '../pages/workout-edit/workout-edit';
 
 
 @NgModule({
@@ -15,8 +18,11 @@ import { TabsPage } from '../pages/tabs/tabs';
     MyApp,
     HomePage,
     WorkoutsPage,
+    WorkoutEditPage,
     ExercisesPage,
+    ExerciseEditPage,
     CategoriesPage,
+    CategoryEditPage,
     StatsPage,
     SettingsPage,
     TabsPage
@@ -29,8 +35,11 @@ import { TabsPage } from '../pages/tabs/tabs';
     MyApp,
     HomePage,
     WorkoutsPage,
+    WorkoutEditPage,
     ExercisesPage,
+    ExerciseEditPage,
     CategoriesPage,
+    CategoryEditPage,
     StatsPage,
     SettingsPage,
     TabsPage

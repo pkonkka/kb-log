@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
+
+import { ExerciseEditPage } from '../exercise-edit/exercise-edit';
 
 @Component({
   selector: 'page-exercises',
@@ -7,10 +9,15 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class ExercisesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(private navCtrl: NavController) {}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ExercisesPage');
+  onNewExercise() {
+    this.navCtrl.push(ExerciseEditPage);
+    console.log('onAddExercise');
+  }
+
+  onSearchExercise() {
+    console.log('onSearchExercise');
   }
 
 }

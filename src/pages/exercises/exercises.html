@@ -7,6 +7,18 @@
       </button>
     </ion-buttons>
 
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onNewExercise()">
+        <ion-icon name="add" large></ion-icon>
+      </button>
+    </ion-buttons>    
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onSearchExercise()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>    
+
     <ion-title>Exercises</ion-title>
   </ion-navbar>
 
@@ -14,5 +26,4 @@
 
 
 <ion-content padding>
-  <button ion-button>New</button>
 </ion-content>
