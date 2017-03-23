@@ -15,6 +15,12 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-list>
+    <button ion-item *ngFor="let workout of workouts; let i = index" (click)="onLoad(i)">
+      <h2>{{ workout.name }}</h2>
+      <ion-note>{{ workout.description }}</ion-note>
+    </button>
+  </ion-list>
 </ion-content>
 
 

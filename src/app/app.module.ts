@@ -19,6 +19,7 @@ import { WorkoutEditPage } from '../pages/workout-edit/workout-edit';
 
 // services
 import { AuthService } from '../services/auth';
+import { WorkoutService } from '../services/workout';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { AuthService } from '../services/auth';
     SignupPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
-  AuthService]
+  AuthService,
+  WorkoutService]
 })
 export class AppModule {}
