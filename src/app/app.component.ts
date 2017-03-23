@@ -20,7 +20,7 @@ export class MyApp {
   settingsPage = SettingsPage;
   tabsPage = TabsPage;
 
-  signinPage = LoginPage;
+  loginPage = LoginPage;
   signupPage = SignupPage;
   isAuthenticated = false;  
 

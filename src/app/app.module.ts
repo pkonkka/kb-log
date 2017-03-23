@@ -8,8 +8,10 @@ import { CategoryEditPage } from '../pages/category-edit/category-edit';
 import { ExercisesPage } from '../pages/exercises/exercises';
 import { ExerciseEditPage } from '../pages/exercise-edit/exercise-edit';
 import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
 import { MePage } from '../pages/me/me';
 import { SettingsPage } from '../pages/settings/settings';
+import { SignupPage } from '../pages/signup/signup'; 
 import { StatsPage } from '../pages/stats/stats';
 import { TabsPage } from '../pages/tabs/tabs';
 import { WorkoutsPage } from '../pages/workouts/workouts';
@@ -32,7 +34,9 @@ import { AuthService } from '../services/auth';
     StatsPage,
     SettingsPage,
     TabsPage,
-    MePage
+    MePage,
+    LoginPage,
+    SignupPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -50,7 +54,9 @@ import { AuthService } from '../services/auth';
     StatsPage,
     SettingsPage,
     TabsPage,
-    MePage
+    MePage,
+    LoginPage,
+    SignupPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
   AuthService]
