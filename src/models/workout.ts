@@ -13,11 +13,4 @@ export class Workout {
         public modifiedAt: string) {
         }
 
-        static fromJson({$key, name, description, url, exercises, createdAt, modifiedAt}): Workout {
-            return new Workout($key, name, description, url, exercises, createdAt, modifiedAt);
-        }
-
-        static fromJsonArray(json: any[]): Workout[] {
-            return json.map(Workout.fromJson);
-        }
 }

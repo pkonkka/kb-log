@@ -17,22 +17,4 @@ export class Exercise {
 
         }
 
-    static fromJson({$key, name, note, url, workouts, categories, workoutId, createdAt, modifiedAt}): Exercise {
-        return new Exercise(
-            $key,
-            name,
-            note,
-            url,
-            workouts,
-            categories,
-            workoutId,
-            createdAt,
-            modifiedAt
-        );
-    }
-
-    static fromJsonArray(json: any[]): Exercise[] {
-        return json.map(Exercise.fromJson);
-    }
-
 }
