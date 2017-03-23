@@ -4,8 +4,8 @@ import firebase from 'firebase';
 export class AuthService {
 
     // ------------------------------------------------------------------
-    signup(email: string, password: string) {
-        return firebase.auth().createUserWithEmailAndPassword(email, password);
+    geCurrentUser() {
+        return firebase.auth().currentUser;
     }
 
     // ------------------------------------------------------------------
@@ -19,8 +19,18 @@ export class AuthService {
     }
 
     // ------------------------------------------------------------------
-    geCurrentUser() {
-        return firebase.auth().currentUser;
+    signup(email: string, password: string) {
+        return firebase.auth().createUserWithEmailAndPassword(email, password);
+    }
+
+    // ------------------------------------------------------------------
+    updateEmail(newEmail: string) {
+        return firebase.auth().currentUser.updatePassword(newEmail);
+    }
+
+    // ------------------------------------------------------------------
+    updatePassword(newPassword: string) {
+        return firebase.auth().currentUser.updatePassword(newPassword);
     }
 
 }

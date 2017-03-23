@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ViewController } from 'ionic-angular';
 
 import { ExerciseEditPage } from '../exercise-edit/exercise-edit';
 
@@ -9,7 +9,12 @@ import { ExerciseEditPage } from '../exercise-edit/exercise-edit';
 })
 export class ExercisesPage {
 
-  constructor(private navCtrl: NavController) {}
+  constructor(private navCtrl: NavController, private viewCtrl: ViewController) {}
+
+  ionViewWillEnter() {
+    this.viewCtrl.setBackButtonText('');
+  }
+  
 
   onNewExercise() {
     this.navCtrl.push(ExerciseEditPage);

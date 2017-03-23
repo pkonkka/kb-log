@@ -1,22 +1,16 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, ViewController } from 'ionic-angular';
 
-/*
-  Generated class for the Categories page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-categories',
   templateUrl: 'categories.html'
 })
 export class CategoriesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController) {}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CategoriesPage');
-  }
+  ionViewWillEnter() {
+    this.viewCtrl.setBackButtonText('');
+  }  
 
 }

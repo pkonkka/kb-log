@@ -11,6 +11,9 @@ export class WorkoutsPage {
 
   constructor(private navCtrl: NavController) {}
 
+  ionViewWillEnter() {
+  }
+
   // ------------------------------------------------------------------
   onNewWorkout() {
     console.log('onNewWorkout');
