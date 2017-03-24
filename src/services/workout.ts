@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+
 import { AuthService } from '../services/auth';
-
-import 'rxjs/Rx';
-
 import { Workout } from '../models/workout';
 
 @Injectable()
@@ -14,16 +13,20 @@ export class WorkoutService {
     constructor(private http: Http, private authService: AuthService) {}
 
     // ------------------------------------------------------------------
-    getAllWorkoutsFromDb(token: string) {
+    // load workouts from firebase
+    // ------------------------------------------------------------------    
+    loadAllWorkouts(token: string): Observable<Workout[]> {
 
-        const userId = this.authService.geCurrentUser().uid;
+        const userId = this.authService.getCurrentUser().uid;
 
         return this.http.get(
             'https://gym-log-33bb9.firebaseio.com/users/' + userId + 
             '/workouts.json?auth=' + token,
             this.workouts)
             .map((response: Response) => {
-               return response.json(); 
+                const resp = response.json();
+                this.workouts = Object.keys(resp).map(function(key) { return resp[key]; });
+                return this.workouts; 
             })
             .do((data) => {
                 this.workouts = data;
@@ -32,8 +35,20 @@ export class WorkoutService {
     }
 
     // ------------------------------------------------------------------
-    getAllWorkoutFromDevice() {
-        return this.workouts.slice();
+    // load workouts from device
+    // ------------------------------------------------------------------    
+
+
+
+
+    // ------------------------------------------------------------------
+    // load workouts from memory
+    // ------------------------------------------------------------------    
+    getAllWorkouts() {
+        return Observable.from(this.workouts);
     }
+
+
+
 
 }

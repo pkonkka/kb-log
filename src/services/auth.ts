@@ -4,32 +4,37 @@ import firebase from 'firebase';
 export class AuthService {
 
     // ------------------------------------------------------------------
-    geCurrentUser() {
+    getCurrentUser(): firebase.User {
         return firebase.auth().currentUser;
     }
 
     // ------------------------------------------------------------------
-    login(email: string, password: string) {
+    login(email: string, password: string): firebase.Promise<any> {
         return firebase.auth().signInWithEmailAndPassword(email, password);
     }
 
     // ------------------------------------------------------------------
-    logout() {
-        firebase.auth().signOut();
+    logout(): firebase.Promise<any> {
+        return firebase.auth().signOut();
     }
 
     // ------------------------------------------------------------------
-    signup(email: string, password: string) {
+    sendPasswordResetEmail(email: string): firebase.Promise<any> {
+        return firebase.auth().sendPasswordResetEmail(email);
+    }
+
+    // ------------------------------------------------------------------
+    signup(email: string, password: string): firebase.Promise<any> {
         return firebase.auth().createUserWithEmailAndPassword(email, password);
     }
 
     // ------------------------------------------------------------------
-    updateEmail(newEmail: string) {
+    updateEmail(newEmail: string): firebase.Promise<any> {
         return firebase.auth().currentUser.updatePassword(newEmail);
     }
 
     // ------------------------------------------------------------------
-    updatePassword(newPassword: string) {
+    updatePassword(newPassword: string): firebase.Promise<any> {
         return firebase.auth().currentUser.updatePassword(newPassword);
     }
 

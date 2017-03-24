@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertController, LoadingController, NavController } from 'ionic-angular';
+import { Subscription } from 'rxjs/Rx';
 
 import { WorkoutEditPage } from '../workout-edit/workout-edit';
 
@@ -7,14 +8,15 @@ import { Workout } from '../../models/workout';
 import { WorkoutService } from '../../services/workout';
 import { AuthService } from '../../services/auth';
 
+
 @Component({
   selector: 'page-workouts',
   templateUrl: 'workouts.html'
 })
-export class WorkoutsPage implements OnInit {
+export class WorkoutsPage implements OnInit, OnDestroy {
 
   workouts: Workout[] = [];
-  test = ['Hello', 'there'];
+  workoutSub: Subscription;
 
   // ------------------------------------------------------------------
   constructor(
@@ -37,16 +39,12 @@ export class WorkoutsPage implements OnInit {
         (token: string) => {
 
           loading.present();    
-          this.workoutService.getAllWorkoutsFromDb(token)
+          this.workoutSub = this.workoutService.loadAllWorkouts(token)
             .subscribe(
               (list: Workout[]) => {
                 loading.dismiss();
                 if (list) {
-                  // this.workouts = list;
-                  // console.log(this.workouts);
-                  this.workouts = Object.keys(list).map(function(key) { return list[key]; });
-                  console.log(this.workouts);
-
+                  this.workouts = list;
                 } else {
                   this.workouts = [];
                 }
@@ -61,6 +59,10 @@ export class WorkoutsPage implements OnInit {
       .catch(err => console.log(err));
   }
 
+  // -------------------------------------------------------------
+  ngOnDestroy() {
+    this.workoutSub.unsubscribe();
+  }
 
   // -------------------------------------------------------------
   onLoad(index: number) {
@@ -70,6 +72,12 @@ export class WorkoutsPage implements OnInit {
   // ------------------------------------------------------------------
   onNewWorkout() {
     console.log('onNewWorkout');
+    this.workoutService.getAllWorkouts()
+      .subscribe(
+        data => console.log(data)
+      );
+
+
     this.navCtrl.push(WorkoutEditPage);
   }
 

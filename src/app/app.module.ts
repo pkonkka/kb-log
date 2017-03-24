@@ -19,6 +19,7 @@ import { WorkoutEditPage } from '../pages/workout-edit/workout-edit';
 
 // services
 import { AuthService } from '../services/auth';
+import { ExerciseService } from '../services/exercise';
 import { WorkoutService } from '../services/workout';
 
 
@@ -61,6 +62,7 @@ import { WorkoutService } from '../services/workout';
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
   AuthService,
+  ExerciseService,
   WorkoutService]
 })
 export class AppModule {}

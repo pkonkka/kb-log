@@ -13,12 +13,6 @@
       </button>
     </ion-buttons>    
 
-    <ion-buttons end>
-      <button ion-button icon-only (click)="onSearchExercise()">
-        <ion-icon name="search"></ion-icon>
-      </button>
-    </ion-buttons>    
-
     <ion-title>Exercises</ion-title>
   </ion-navbar>
 
@@ -26,4 +20,10 @@
 
 
 <ion-content padding>
+  <ion-list>
+    <button ion-item *ngFor="let exercise of exercises; let i = index" (click)="onLoad(i)">
+      <h3>{{ exercise.name }}</h3>
+      <ion-note> ...</ion-note>
+    </button>
+  </ion-list>
 </ion-content>
