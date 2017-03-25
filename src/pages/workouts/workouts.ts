@@ -34,31 +34,24 @@ export class WorkoutsPage implements OnInit, OnDestroy {
       content: 'Please wait...'
     });
 
-    this.authService.geCurrentUser().getToken()
-      .then(
-        (token: string) => {
-
-          loading.present();    
-          this.workoutSub = this.workoutService.loadAllWorkouts(token)
-            .subscribe(
-              (list: Workout[]) => {
-                loading.dismiss();
-                if (list) {
-                  this.workouts = list;
-                } else {
-                  this.workouts = [];
-                }
-              },
-              error => {
-                loading.dismiss();
-                this.handleError(error.json().message);
-              }
-            )
+    loading.present();    
+    this.workoutSub = this.workoutService.findAllWorkouts()
+      .subscribe(
+        (list: Workout[]) => {
+          loading.dismiss();
+          if (list) {
+            this.workouts = list;
+          } else {
+            this.workouts = [];
+          }
+        },
+        error => {
+          loading.dismiss();
+          this.handleError(error.json().message);
         }
       )
-      .catch(err => console.log(err));
   }
-
+  
   // -------------------------------------------------------------
   ngOnDestroy() {
     this.workoutSub.unsubscribe();
@@ -72,12 +65,6 @@ export class WorkoutsPage implements OnInit, OnDestroy {
   // ------------------------------------------------------------------
   onNewWorkout() {
     console.log('onNewWorkout');
-    this.workoutService.getAllWorkouts()
-      .subscribe(
-        data => console.log(data)
-      );
-
-
     this.navCtrl.push(WorkoutEditPage);
   }
 

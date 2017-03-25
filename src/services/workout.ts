@@ -1,54 +1,191 @@
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2';
+import { FirebaseListFactoryOpts } from 'angularfire2/interfaces';
+
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
+import * as moment from 'moment';
+
 import { AuthService } from '../services/auth';
+import { Exercise } from '../models/exercise';
 import { Workout } from '../models/workout';
 
 @Injectable()
 export class WorkoutService {
 
-    workouts: Workout[] = [];
+    private workouts$: FirebaseListObservable<Workout[]>;
+    private userUrl;
+    private workoutUrl;
+
+    // -------------------------------------------------------------------------------------------------
+    //  Set paths and observable
+    // -------------------------------------------------------------------------------------------------        
+    constructor(private db: AngularFireDatabase, private authService: AuthService) {
+
+        this.userUrl = 'users/' + this.authService.getCurrentUser().uid + '/';
+        this.workoutUrl = this.userUrl + 'workouts';
+        this.workouts$ = this.db.list(this.workoutUrl);
+
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    //  Get all workouts from the database
+    // -------------------------------------------------------------------------------------------------    
+    findAllWorkouts(): Observable<Workout[]> {
+
+        return this.workouts$.map(Workout.fromJsonArray);
+
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    //  Get five first workouts, ordered by url
+    // -------------------------------------------------------------------------------------------------    
+    loadFirstWorkoutsPage(pageSize = 5): Observable<Workout[]> {
+
+        this.workouts$ = this.db.list(this.workoutUrl, {
+            query: {
+                orderByChild: 'url',
+                limitToFirst: pageSize
+            }
+        });
+        return this.workouts$.map(Workout.fromJsonArray);
+
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    //  Get a workout by an url
+    // -------------------------------------------------------------------------------------------------    
+    findWorkoutByUrl(workoutUrl: string): Observable<Workout> {
+        return this.db.list(this.workoutUrl, {
+            query: {
+                orderByChild: 'url',
+                equalTo: workoutUrl
+            }
+        })
+        .map(results => results[0])
+        .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // Find an workout by an workout key
+    // -------------------------------------------------------------------------------------------------
+    findWorkoutByKey(workoutKey: string): Observable<Exercise> {
+
+        return this.db.list(this.workoutUrl, {
+            query: {
+                $key: workoutKey
+            }
+        })
+        .map(results => results[0]);
+    }
     
-    constructor(private http: Http, private authService: AuthService) {}
+    // -------------------------------------------------------------------------------------------------
+    //  Get the exercise keys per workout url
+    // -------------------------------------------------------------------------------------------------    
+    findExerciseKeysPerWorkoutUrl(
+        workoutUrl: string,
+        query: FirebaseListFactoryOpts = {}): Observable<string[]> {
+            return this.findWorkoutByUrl(workoutUrl)
+                .filter(workout => !!workout)
+                .switchMap(workout => this.db.list(`${this.workoutUrl}/${workout.$key}/exercises`, query))
+                .map(lspc => lspc.map(lpc => lpc.$key));
+        }
 
-    // ------------------------------------------------------------------
-    // load workouts from firebase
-    // ------------------------------------------------------------------    
-    loadAllWorkouts(token: string): Observable<Workout[]> {
+    // -------------------------------------------------------------------------------------------------
+    //  Get an exercise based an exercise key
+    // -------------------------------------------------------------------------------------------------    
+    findExercisesForExerciseKeys(exerciseKeys$: Observable<string[]>): Observable<Exercise[]> {
+        return exerciseKeys$
+            .map(lspc => lspc.map(exerciseKey => this.db.object(this.userUrl + 'exercises/' + exerciseKey)) )
+            .flatMap(fbojs => Observable.combineLatest(fbojs));
 
-        const userId = this.authService.getCurrentUser().uid;
+    }
 
-        return this.http.get(
-            'https://gym-log-33bb9.firebaseio.com/users/' + userId + 
-            '/workouts.json?auth=' + token,
-            this.workouts)
-            .map((response: Response) => {
-                const resp = response.json();
-                this.workouts = Object.keys(resp).map(function(key) { return resp[key]; });
-                return this.workouts; 
-            })
-            .do((data) => {
-                this.workouts = data;
+    // -------------------------------------------------------------------------------------------------
+    //  Get all exercises for a workout
+    // -------------------------------------------------------------------------------------------------    
+    findAllExercisesForWorkout(workoutUrl: string): Observable<Exercise[]> {
+        return this.findExercisesForExerciseKeys(this.findExerciseKeysPerWorkoutUrl(workoutUrl));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    //  Get only the first page
+    // -------------------------------------------------------------------------------------------------
+    loadFirstExercisesPage(workoutUrl: string, pageSize: number): Observable<Exercise[]> {
+
+        const firstPageExerciseKeys$ = this.findExerciseKeysPerWorkoutUrl(workoutUrl,
+            {
+                query: {
+                    limitToFirst: pageSize
+                }
             });
-        
-    }
 
-    // ------------------------------------------------------------------
-    // load workouts from device
-    // ------------------------------------------------------------------    
-
-
-
-
-    // ------------------------------------------------------------------
-    // load workouts from memory
-    // ------------------------------------------------------------------    
-    getAllWorkouts() {
-        return Observable.from(this.workouts);
+        return this.findExercisesForExerciseKeys(firstPageExerciseKeys$);
     }
 
 
+    // -------------------------------------------------------------------------------------------------
+    //  Get next page
+    // -------------------------------------------------------------------------------------------------    
+    loadNextPage(workoutUrl: string, exerciseKey: string, pageSize: number): Observable<Exercise[]> {
+
+        const exerciseKeys$ = this.findExerciseKeysPerWorkoutUrl(workoutUrl,
+            {
+                query: {
+                    orderByKey: true,
+                    startAt: exerciseKey,
+                    limitToFirst: pageSize + 1
+                }
+            });
+
+        return this.findExercisesForExerciseKeys(exerciseKeys$)
+            .map(exercises => exercises.slice(1, exercises.length));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    //  Get previous page
+    // -------------------------------------------------------------------------------------------------    
+    loadPreviousPage(workoutUrl: string, exerciseKey: string, pageSize: number): Observable<Exercise[]> {
+
+        const exerciseKeys$ = this.findExerciseKeysPerWorkoutUrl(workoutUrl,
+            {
+                query: {
+                    orderByKey: true,
+                    endAt: exerciseKey,
+                    limitToLast: pageSize + 1
+                }
+            });
+
+        return this.findExercisesForExerciseKeys(exerciseKeys$)
+            .map(exercises => exercises.slice(0, exercises.length - 1));
+
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    //  Create new workout item
+    // -------------------------------------------------------------------------------------------------    
+    createWorkout(data): firebase.Promise<any> {
+        data.modifiedAt = data.createdAt = moment().format();
+        return this.workouts$.push(data);
+    }
+
+
+    // -------------------------------------------------------------------------------------------------
+    //  Remove a workout from the database
+    // -------------------------------------------------------------------------------------------------    
+    removeWorkout(workout: Workout): firebase.Promise<any> {
+        return this.workouts$.remove(workout.$key);
+    }
+
+
+    // -------------------------------------------------------------------------------------------------
+    //  Update a workout
+    // -------------------------------------------------------------------------------------------------    
+    updateWorkout(workoutKey: string, changes: any): firebase.Promise<any> {
+        changes.modifiedAt = moment().format();
+        return this.workouts$.update(workoutKey, changes);
+
+    }
 
 
 }

@@ -1,5 +1,10 @@
+import { AngularFireDatabase } from 'angularfire2';
+import { AngularFireModule} from "angularfire2/index";
+
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { firebaseConfig, authConfig} from "../environments/firebase.config";
+
 
 // pages
 import { MyApp } from './app.component';
@@ -41,7 +46,9 @@ import { WorkoutService } from '../services/workout';
     SignupPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig, authConfig)
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [

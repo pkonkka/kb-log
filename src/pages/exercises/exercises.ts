@@ -32,31 +32,24 @@ export class ExercisesPage implements OnInit {
     const loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
-
-    this.authService.geCurrentUser().getToken()
-      .then(
-        (token: string) => {
-
-          loading.present();    
-          this.exerciseService.loadAllExercises(token)
-            .subscribe(
-              (list: Exercise[]) => {
-                loading.dismiss();
-                if (list) {
-                  console.log(list);
-                  this.exercises = list;
-                } else {
-                  this.exercises = [];
-                }
-              },
-              error => {
-                loading.dismiss();
-                this.handleError(error.json().message);
-              }
-            )
+    loading.present();    
+    
+    this.exerciseService.findAllExercises()
+      .subscribe(
+        (list: Exercise[]) => {
+          loading.dismiss();
+          if (list) {
+            console.log(list);
+            this.exercises = list;
+          } else {
+            this.exercises = [];
+          }
+        },
+        error => {
+          loading.dismiss();
+          this.handleError(error.json().message);
         }
       )
-      .catch(err => console.log(err));
   }
 
 
