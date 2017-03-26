@@ -5,8 +5,10 @@ import { Subscription } from 'rxjs/Rx';
 
 import { Exercise } from '../../models/exercise';
 import { ExercisePage } from '../exercise/exercise';
+
 import { Workout } from '../../models/workout';
 import { WorkoutService } from '../../services/workout';
+import { WorkoutEditPage } from '../workout-edit/workout-edit';
 
 @Component({
   selector: 'page-workout',
@@ -49,7 +51,7 @@ export class WorkoutPage implements OnInit, OnDestroy {
 
   // -------------------------------------------------------------------------------------
   onEditWorkout() {
-    
+    this.navCtrl.push(WorkoutEditPage, { workout: this.workout, mode: 'Edit'});    
   }
 
   // -------------------------------------------------------------------------------------

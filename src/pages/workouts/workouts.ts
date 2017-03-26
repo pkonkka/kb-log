@@ -65,7 +65,7 @@ export class WorkoutsPage implements OnInit, OnDestroy {
 
   // ------------------------------------------------------------------
   onNewWorkout() {
-    this.navCtrl.push(WorkoutEditPage);
+    this.navCtrl.push(WorkoutEditPage, { workout: null, mode: 'New'});    
   }
 
   // ----------------------------------------------------------------------------
