@@ -1,15 +1,18 @@
 <ion-header>
   <ion-navbar>
+    
     <ion-buttons start>
       <button ion-button icon-only menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
+
     <ion-buttons end>
       <button ion-button icon-only (click)="onNewWorkout()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>    
+
     <ion-title>Workouts</ion-title>
   </ion-navbar>
 </ion-header>
@@ -19,7 +22,7 @@
 
     <button ion-item *ngFor="let workout of workouts; let i = index" (click)="onLoad(i)">
       <h2>{{ workout.name }}</h2>            
-      <ion-badge item-right *ngIf="workout.modiedtAt == workout.createdAt">NEW</ion-badge>        
+      <ion-badge item-right *ngIf="workout.modifiedAt == workout.createdAt">NEW</ion-badge>        
       <small item-right>{{ workout.modifiedAt | date }}</small>
       <small>{{ workout.exercises | count }} exercises</small>
     </button>

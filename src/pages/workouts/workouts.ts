@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertController, LoadingController, NavController } from 'ionic-angular';
 import { Subscription } from 'rxjs/Rx';
 
+import { WorkoutPage } from '../workout/workout';
 import { WorkoutEditPage } from '../workout-edit/workout-edit';
 
 import { Workout } from '../../models/workout';
@@ -59,12 +60,11 @@ export class WorkoutsPage implements OnInit, OnDestroy {
 
   // -------------------------------------------------------------
   onLoad(index: number) {
-    // this.navCtrl.push(RecipePage, { recipe: this.recipes[index], index: index});
+    this.navCtrl.push(WorkoutPage, { workout: this.workouts[index], index: index});
   }
 
   // ------------------------------------------------------------------
   onNewWorkout() {
-    console.log('onNewWorkout');
     this.navCtrl.push(WorkoutEditPage);
   }
 

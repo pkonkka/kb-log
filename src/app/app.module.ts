@@ -10,6 +10,7 @@ import { firebaseConfig, authConfig} from "../environments/firebase.config";
 import { MyApp } from './app.component';
 import { CategoriesPage } from '../pages/categories/categories';
 import { CategoryEditPage } from '../pages/category-edit/category-edit';
+import { ExercisePage } from '../pages/exercise/exercise';
 import { ExercisesPage } from '../pages/exercises/exercises';
 import { ExerciseEditPage } from '../pages/exercise-edit/exercise-edit';
 import { HomePage } from '../pages/home/home';
@@ -19,6 +20,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { SignupPage } from '../pages/signup/signup'; 
 import { StatsPage } from '../pages/stats/stats';
 import { TabsPage } from '../pages/tabs/tabs';
+import { WorkoutPage } from '../pages/workout/workout';
 import { WorkoutsPage } from '../pages/workouts/workouts';
 import { WorkoutEditPage } from '../pages/workout-edit/workout-edit';
 
@@ -36,19 +38,22 @@ import { WorkoutService } from '../services/workout';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    WorkoutsPage,
-    WorkoutEditPage,
-    ExercisesPage,
-    ExerciseEditPage,
     CategoriesPage,
     CategoryEditPage,
-    StatsPage,
-    SettingsPage,
-    TabsPage,
+    ExercisePage,
+    ExercisesPage,
+    ExerciseEditPage,
+    HomePage,
+    LoginPage,    
     MePage,
-    LoginPage,
-    SignupPage,
+    SettingsPage,
+    SignupPage,     
+    StatsPage,
+    TabsPage,
+    WorkoutsPage,
+    WorkoutEditPage,
+    WorkoutPage,
+
     ExerciseCountPipe,
     CapitalizePipe,
     DatePipe
@@ -64,6 +69,7 @@ import { WorkoutService } from '../services/workout';
     HomePage,
     WorkoutsPage,
     WorkoutEditPage,
+    ExercisePage,
     ExercisesPage,
     ExerciseEditPage,
     CategoriesPage,
@@ -73,7 +79,8 @@ import { WorkoutService } from '../services/workout';
     TabsPage,
     MePage,
     LoginPage,
-    SignupPage
+    SignupPage,
+    WorkoutPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
   AuthService,

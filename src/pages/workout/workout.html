@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onEditWorkout()">
+        <ion-icon name="brush"></ion-icon>
+      </button>
+    </ion-buttons>    
+    
+    <ion-title>{{ workout?.name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+
+    <button ion-item *ngFor="let exercise of workoutExercises; let i = index" (click)="onLoad(i)">
+      <h2>{{ exercise.name }}</h2>            
+    </button>
+
+  </ion-list>
+
+</ion-content>
