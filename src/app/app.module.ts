@@ -1,4 +1,4 @@
-import { AngularFireDatabase } from 'angularfire2';
+// import { AngularFireDatabase } from 'angularfire2';
 import { AngularFireModule} from "angularfire2/index";
 
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -22,6 +22,11 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { WorkoutsPage } from '../pages/workouts/workouts';
 import { WorkoutEditPage } from '../pages/workout-edit/workout-edit';
 
+// pipes
+import { ExerciseCountPipe } from '../pipes/exercise-count';
+import { CapitalizePipe } from '../pipes/capitalize';
+import { DatePipe } from '../pipes/date';
+
 // services
 import { AuthService } from '../services/auth';
 import { ExerciseService } from '../services/exercise';
@@ -43,7 +48,10 @@ import { WorkoutService } from '../services/workout';
     TabsPage,
     MePage,
     LoginPage,
-    SignupPage
+    SignupPage,
+    ExerciseCountPipe,
+    CapitalizePipe,
+    DatePipe
   ],
   imports: [
     IonicModule.forRoot(MyApp),
