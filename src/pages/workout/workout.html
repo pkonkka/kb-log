@@ -1,25 +1,25 @@
 <ion-header>
 
   <ion-navbar>
-
     <ion-buttons end>
       <button ion-button icon-only (click)="onEditWorkout()">
-        <ion-icon name="brush"></ion-icon>
+        <!--<ion-icon name="brush"></ion-icon>-->
+        <!--<i class="fa fa-pencil"></i>        -->
+        <i class="icon ion-edit"></i>
       </button>
     </ion-buttons>    
-    
-    <ion-title>{{ workout?.name }}</ion-title>
+    <ion-title>{{ workout?.name }}</ion-title>    
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
 
   <ion-list>
+    <p>{{ workout?.description }}</p>    
 
     <button ion-item *ngFor="let exercise of workoutExercises; let i = index" (click)="onLoad(i)">
-      <h2>{{ exercise.name }}</h2>            
+      <h2>{{ exercise?.name }}</h2>            
     </button>
 
   </ion-list>

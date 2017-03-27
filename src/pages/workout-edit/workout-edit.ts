@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavParams, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { generateUrl } from '../../shared/generate-url';
  
 import { Workout } from '../../models/workout';
 import { WorkoutService } from '../../services/workout';
+import { WorkoutPage } from '../workout/workout';
+import { WorkoutsPage } from '../workouts/workouts';
 
 @Component({
   selector: 'page-workout-edit',
@@ -20,6 +22,7 @@ export class WorkoutEditPage implements OnInit {
   // ----------------------------------------------------------------------
   constructor(
     private viewCtrl: ViewController, 
+    private navCtrl: NavController,
     private navParams: NavParams,
     private workoutService: WorkoutService) {}
 
@@ -43,10 +46,30 @@ export class WorkoutEditPage implements OnInit {
     newWorkout.url = generateUrl(newWorkout.name);
 
     if (this.mode == 'Edit') {
-      this.workoutService.updateWorkout(this.workout.$key, newWorkout);
+      
+      this.workoutService.updateWorkout(this.workout.$key, newWorkout)
+        .then(
+          () => {
+            this.navCtrl.push(WorkoutPage, {workout: newWorkout});
+          }
+        )
+        .catch(err => console.log('update failed: ', err));
+
     } else {
-      this.workoutService.createWorkout(newWorkout);
+
+      this.workoutService.createWorkout(newWorkout)
+        .then(() => this.navCtrl.popToRoot())
+        .catch(err => console.log(err));
+
     }
+
+  }
+
+  // ----------------------------------------------------------------------
+  onRemove() {
+    this.workoutService.removeWorkout(this.workout)
+      .then(() => this.navCtrl.popToRoot())
+      .catch(err => console.log(err));
   }
 
   // ----------------------------------------------------------------------

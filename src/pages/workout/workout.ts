@@ -28,20 +28,26 @@ export class WorkoutPage implements OnInit, OnDestroy {
 
   }
 
+
   // -------------------------------------------------------------------------------------
   ionViewWillEnter() {
+
     this.viewCtrl.setBackButtonText('');
+
+    this.workout = this.navParams.get('workout');
+
+    console.log('ionViewWillEnter: ', this.workout);
+
+    this.workoutSub = this.workoutService.findAllExercisesForWorkout(this.workout.url)
+      .subscribe(
+        exercises => this.workoutExercises = exercises
+      );
+    
   }
 
   // -------------------------------------------------------------------------------------
   ngOnInit() {
-    this.workout = this.navParams.get('workout');
 
-    this.workoutSub = this.workoutService.findAllExercisesForWorkout(this.workout.url)
-      .do(console.log)
-      .subscribe(
-        exercises => this.workoutExercises = exercises
-      );
   }
 
   // -------------------------------------------------------------------------------------
@@ -57,7 +63,6 @@ export class WorkoutPage implements OnInit, OnDestroy {
   // -------------------------------------------------------------------------------------
   onLoad(index: number) {
     this.navCtrl.push(ExercisePage, { workout: this.workout, exercise: this.workoutExercises[index]});
-
   }
  
 }

@@ -32,7 +32,17 @@
       block
       [disabled]="!workoutForm.valid"
       >Save Workout</button>
-    
+
+    <button 
+      *ngIf="mode == 'Edit'"
+      ion-button 
+      type="button" 
+      block
+      color="danger"
+      (click)="onRemove()"
+      >Remove Workout</button>
+
+
   </form>
 
 </ion-content>
