@@ -20,7 +20,7 @@
 <ion-content padding>
   <ion-list>
 
-    <button ion-item *ngFor="let workout of workouts; let i = index" (click)="onLoad(i)">
+    <button ion-item *ngFor="let workout of workouts; let i = index" (tap)="onLoad(i)" (press)="onShowOptions(i, $event)">
       <h2>{{ workout.name }}</h2>            
       <ion-badge item-right *ngIf="workout.modifiedAt == workout.createdAt">NEW</ion-badge>        
       <small item-right>{{ workout.modifiedAt | date }}</small>

@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AlertController, LoadingController, NavController } from 'ionic-angular';
+import { AlertController, LoadingController, NavController, PopoverController } from 'ionic-angular';
 import { Subscription } from 'rxjs/Rx';
 
 import { WorkoutPage } from '../workout/workout';
 import { WorkoutEditPage } from '../workout-edit/workout-edit';
+import { WorkoutsOptionsPage } from '../workouts-options/workouts-options';
 
 import { Workout } from '../../models/workout';
 import { WorkoutService } from '../../services/workout';
@@ -25,7 +26,8 @@ export class WorkoutsPage implements OnInit, OnDestroy {
     private workoutService: WorkoutService,
     private authService: AuthService,
     private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController) {}
+    private loadingCtrl: LoadingController,
+    private popoverCtrl: PopoverController) {}
 
 
   // ------------------------------------------------------------------
@@ -61,6 +63,21 @@ export class WorkoutsPage implements OnInit, OnDestroy {
   // -------------------------------------------------------------
   onLoad(index: number) {
     this.navCtrl.push(WorkoutPage, { workout: this.workouts[index], index: index});
+  }
+
+  // -------------------------------------------------------------
+  onShowOptions(index: number, event: MouseEvent) {
+
+    const popover = this.popoverCtrl.create(WorkoutsOptionsPage);
+    popover.present({ev: event});
+
+    popover.onDidDismiss(
+      data => {
+        if (data != null && data.action == 'edit') {
+          this.navCtrl.push(WorkoutEditPage, { workout: this.workouts[index], mode: 'Edit'})
+        }
+      });
+
   }
 
   // ------------------------------------------------------------------

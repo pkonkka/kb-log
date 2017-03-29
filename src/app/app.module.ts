@@ -13,6 +13,7 @@ import { TestComponent } from '../components/test';
 import { MyApp } from './app.component';
 import { CategoriesPage } from '../pages/categories/categories';
 import { CategoryEditPage } from '../pages/category-edit/category-edit';
+import { CategoryPage } from '../pages/category/category';
 import { ExercisePage } from '../pages/exercise/exercise';
 import { ExercisesPage } from '../pages/exercises/exercises';
 import { ExerciseEditPage } from '../pages/exercise-edit/exercise-edit';
@@ -26,6 +27,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { WorkoutPage } from '../pages/workout/workout';
 import { WorkoutsPage } from '../pages/workouts/workouts';
 import { WorkoutEditPage } from '../pages/workout-edit/workout-edit';
+import { WorkoutsOptionsPage } from '../pages/workouts-options/workouts-options';
 
 // pipes
 import { ExerciseCountPipe } from '../pipes/exercise-count';
@@ -34,6 +36,7 @@ import { DatePipe } from '../pipes/date';
 
 // services
 import { AuthService } from '../services/auth';
+import { CategoryService } from '../services/category';
 import { ExerciseService } from '../services/exercise';
 import { WorkoutService } from '../services/workout';
 
@@ -43,6 +46,7 @@ import { WorkoutService } from '../services/workout';
     MyApp,
     CategoriesPage,
     CategoryEditPage,
+    CategoryPage,
     ExercisePage,
     ExercisesPage,
     ExerciseEditPage,
@@ -56,6 +60,7 @@ import { WorkoutService } from '../services/workout';
     WorkoutsPage,
     WorkoutEditPage,
     WorkoutPage,
+    WorkoutsOptionsPage,
     ExerciseCountPipe,
     CapitalizePipe,
     DatePipe,
@@ -77,16 +82,19 @@ import { WorkoutService } from '../services/workout';
     ExerciseEditPage,
     CategoriesPage,
     CategoryEditPage,
+    CategoryPage,
     StatsPage,
     SettingsPage,
     TabsPage,
     MePage,
     LoginPage,
     SignupPage,
-    WorkoutPage
+    WorkoutPage,
+    WorkoutsOptionsPage    
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
   AuthService,
+  CategoryService,
   ExerciseService,
   WorkoutService]
 })

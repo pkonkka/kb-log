@@ -9,6 +9,9 @@ import { LoginPage } from '../pages/login/login';
 import { SettingsPage} from '../pages/settings/settings';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
+import { CategoriesPage } from '../pages/categories/categories';
+import { ExercisesPage } from '../pages/exercises/exercises';
+import { WorkoutsPage } from '../pages/workouts/workouts';
 
 import { AuthService } from '../services/auth';
 
@@ -22,6 +25,12 @@ export class MyApp {
 
   loginPage = LoginPage;
   signupPage = SignupPage;
+
+  workoutsPage = WorkoutsPage;
+  exercisesPage = ExercisesPage;
+  categoriesPage = CategoriesPage;
+  
+
   isAuthenticated = false;  
 
   @ViewChild('nav') nav: NavController;

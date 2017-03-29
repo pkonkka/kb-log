@@ -18,6 +18,30 @@
             <button 
                 ion-item 
                 icon-left 
+                (click)="onLoad(workoutsPage)"
+                *ngIf="isAuthenticated">
+                <ion-icon name="list"></ion-icon>
+                Workouts
+            </button>                                    
+            <button 
+                ion-item 
+                icon-left 
+                (click)="onLoad(exercisesPage)"
+                *ngIf="isAuthenticated">
+                <ion-icon name="body"></ion-icon>
+                Exercises
+            </button>                                                
+            <button 
+                ion-item 
+                icon-left 
+                (click)="onLoad(categoriesPage)"
+                *ngIf="isAuthenticated">
+                <ion-icon name="book"></ion-icon>
+                Categories
+            </button>                                    
+            <button 
+                ion-item 
+                icon-left 
                 (click)="onLoad(loginPage)"
                 *ngIf="!isAuthenticated">
                 <ion-icon name="log-in"></ion-icon>
