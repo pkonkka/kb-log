@@ -5,6 +5,9 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { firebaseConfig, authConfig} from "../environments/firebase.config";
 
+// compoents
+import { TestComponent } from '../components/test';
+
 
 // pages
 import { MyApp } from './app.component';
@@ -53,10 +56,10 @@ import { WorkoutService } from '../services/workout';
     WorkoutsPage,
     WorkoutEditPage,
     WorkoutPage,
-
     ExerciseCountPipe,
     CapitalizePipe,
-    DatePipe
+    DatePipe,
+    TestComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp),

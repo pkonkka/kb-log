@@ -67,8 +67,8 @@ export class ExerciseService {
     // Find all categories for an exercise
     // -------------------------------------------------------------------------------------------------
     findAllCategoriesForExercise(exerciseUrl: string): Observable<Category[]> {
-
         return this.findCategoriesForCategoryKeys(this.findCategoryKeysPerExerciseUrl(exerciseUrl));
+            // .map(Category.fromJsonArray);
     }
 
     // -------------------------------------------------------------------------------------------------

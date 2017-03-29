@@ -8,5 +8,41 @@
 
 
 <ion-content padding>
-  <button ion-button block (click)="onSaveExercise()">Save Exercise</button>
+
+  <form [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
+
+    <ion-list>
+      <ion-item>
+        <ion-label fixed>Name</ion-label>
+        <ion-input
+          type="text"
+          formControlName="name">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Note</ion-label>
+        <ion-textarea formControlName="note"></ion-textarea>
+      </ion-item>
+    </ion-list>
+
+    <button 
+      ion-button 
+      type="submit" 
+      block
+      [disabled]="!exerciseForm.valid"
+      >Save Workout</button>
+
+    <button 
+      *ngIf="mode == 'Edit'"
+      ion-button 
+      type="button" 
+      block
+      color="danger"
+      (click)="onRemove()"
+      >Remove Exercise</button>
+
+  </form>
+
+
 </ion-content>

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, NavController } from 'ionic-angular';
 
+import { ExercisePage } from '../exercise/exercise';
 import { ExerciseEditPage } from '../exercise-edit/exercise-edit';
 
+import { Category } from '../../models/category';
 import { Exercise } from '../../models/exercise';
 import { ExerciseService } from '../../services/exercise';
 import { AuthService } from '../../services/auth';
@@ -15,8 +17,7 @@ import { AuthService } from '../../services/auth';
 export class ExercisesPage implements OnInit {
 
   exercises: Exercise[] = [];
-
-
+  
   // ------------------------------------------------------------------
   constructor(
     private navCtrl: NavController, 
@@ -38,9 +39,30 @@ export class ExercisesPage implements OnInit {
       .subscribe(
         (list: Exercise[]) => {
           loading.dismiss();
+
           if (list) {
-            console.log(list);
             this.exercises = list;
+            
+            this.exercises.map(exercise => {
+
+              this.exerciseService.findAllCategoriesForExercise(exercise.url)
+                .subscribe(
+                  (categories: Category[]) => {
+
+                    categories.map(category => {
+                      console.log('1: ', categories);
+                      categories.push(Category.fromJson(category))
+                      console.log('2: ', categories);                      
+                    }); 
+
+                    exercise.categories = categories;
+    
+                  }
+                )
+            });
+            
+            // console.log('this.exercises', this.exercises);
+            
           } else {
             this.exercises = [];
           }
@@ -48,6 +70,9 @@ export class ExercisesPage implements OnInit {
         error => {
           loading.dismiss();
           this.handleError(error.json().message);
+        },
+        () => {
+          console.log('hello there');
         }
       )
   }
@@ -55,12 +80,11 @@ export class ExercisesPage implements OnInit {
 
   // -------------------------------------------------------------
   onLoad(index: number) {
-    // this.navCtrl.push(RecipePage, { recipe: this.recipes[index], index: index});
+    this.navCtrl.push(ExercisePage, { exercise: this.exercises[index], index: index});
   }
 
   // ------------------------------------------------------------------
   onNewExercise() {
-    console.log('onNewWorkout');
     this.navCtrl.push(ExerciseEditPage);
   }
 

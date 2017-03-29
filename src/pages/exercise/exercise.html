@@ -1,6 +1,11 @@
 <ion-header>
 
   <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onEditExercise()">
+        <ion-icon name="brush"></ion-icon>
+      </button>
+    </ion-buttons>        
     <ion-title>{{ exercise.name}}</ion-title>
   </ion-navbar>
 
