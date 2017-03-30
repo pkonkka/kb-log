@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, LoadingController, NavController } from 'ionic-angular';
+import { AlertController, LoadingController, NavController, PopoverController } from 'ionic-angular';
 
 import { ExercisePage } from '../exercise/exercise';
 import { ExerciseEditPage } from '../exercise-edit/exercise-edit';
+import { ExercisesOptionsPage } from '../exercises-options/exercises-options';
 
 import { Category } from '../../models/category';
 import { Exercise } from '../../models/exercise';
@@ -24,7 +25,8 @@ export class ExercisesPage implements OnInit {
     private exerciseService: ExerciseService,
     private authService: AuthService,
     private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController) {}
+    private loadingCtrl: LoadingController,
+    private popoverCtrl: PopoverController) {}
 
 
   // ------------------------------------------------------------------
@@ -82,6 +84,22 @@ export class ExercisesPage implements OnInit {
   onLoad(index: number) {
     this.navCtrl.push(ExercisePage, { exercise: this.exercises[index], index: index});
   }
+
+  // -------------------------------------------------------------
+  onShowOptions(index: number, event: MouseEvent) {
+
+    const popover = this.popoverCtrl.create(ExercisesOptionsPage);
+    popover.present({ev: event});
+
+    popover.onDidDismiss(
+      data => {
+        if (data != null && data.action == 'edit') {
+          this.navCtrl.push(ExerciseEditPage, { exercise: this.exercises[index], mode: 'Edit'})
+        }
+      });
+
+  }
+
 
   // ------------------------------------------------------------------
   onNewExercise() {

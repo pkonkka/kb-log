@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AlertController, LoadingController, NavController, ViewController } from 'ionic-angular';
+import { AlertController, LoadingController, NavController, PopoverController, ViewController } from 'ionic-angular';
 import { Subscription } from 'rxjs/Rx';
 
 import { Category } from '../../models/category';
 import { CategoryPage } from '../category/category';
+import { CategoriesOptionsPage } from '../categories-options/categories-options';
+import { CategoryEditPage } from '../category-edit/category-edit';
 import { CategoryService } from '../../services/category';
 
 @Component({
@@ -20,6 +22,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private navCtrl: NavController, 
+    private popoverCtrl: PopoverController,
     private viewCtrl: ViewController,
     private categoryService: CategoryService) {}
 
@@ -63,6 +66,21 @@ export class CategoriesPage implements OnInit, OnDestroy {
   // -------------------------------------------------------------
   onLoad(index: number) {
     this.navCtrl.push(CategoryPage, { category: this.categories[index], index: index});
+  }
+
+  // -------------------------------------------------------------
+  onShowOptions(index: number, event: MouseEvent) {
+
+    const popover = this.popoverCtrl.create(CategoriesOptionsPage);
+    popover.present({ev: event});
+
+    popover.onDidDismiss(
+      data => {
+        if (data != null && data.action == 'edit') {
+          this.navCtrl.push(CategoryEditPage, { exercise: this.categories[index], mode: 'Edit'})
+        }
+      });
+
   }
 
   // ------------------------------------------------------------------

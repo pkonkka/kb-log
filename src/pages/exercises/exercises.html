@@ -22,7 +22,7 @@
 <ion-content padding>
   
   <ion-list>
-    <button ion-item *ngFor="let exercise of exercises; let i = index" (click)="onLoad(i)">
+    <button ion-item *ngFor="let exercise of exercises; let i = index" (tap)="onLoad(i)" (press)="onShowOptions(i, $eevent)">
       <h3>{{ exercise.name }}</h3>
       <!--<ion-note *ngFor="let category of exercise.categories">
         {{ category.name }}

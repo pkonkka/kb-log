@@ -28,6 +28,8 @@ import { WorkoutPage } from '../pages/workout/workout';
 import { WorkoutsPage } from '../pages/workouts/workouts';
 import { WorkoutEditPage } from '../pages/workout-edit/workout-edit';
 import { WorkoutsOptionsPage } from '../pages/workouts-options/workouts-options';
+import { ExercisesOptionsPage } from '../pages/exercises-options/exercises-options';
+import { CategoriesOptionsPage } from '../pages/categories-options/categories-options'; 
 
 // pipes
 import { ExerciseCountPipe } from '../pipes/exercise-count';
@@ -61,6 +63,8 @@ import { WorkoutService } from '../services/workout';
     WorkoutEditPage,
     WorkoutPage,
     WorkoutsOptionsPage,
+    ExercisesOptionsPage,
+    CategoriesOptionsPage,
     ExerciseCountPipe,
     CapitalizePipe,
     DatePipe,
@@ -90,7 +94,10 @@ import { WorkoutService } from '../services/workout';
     LoginPage,
     SignupPage,
     WorkoutPage,
-    WorkoutsOptionsPage    
+    WorkoutsOptionsPage,
+    ExercisesOptionsPage,
+    CategoriesOptionsPage,
+    
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
   AuthService,
