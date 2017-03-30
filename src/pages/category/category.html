@@ -1,5 +1,4 @@
 <ion-header>
-
   <ion-navbar>
     <ion-buttons end>
       <button ion-button icon-only (click)="onEditCategory()">
@@ -8,11 +7,13 @@
     </ion-buttons>        
     <ion-title>{{ category?.name }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-
+  <ion-list>
+    <button ion-item *ngFor="let exercise of exercises; let i = index" (click)="onLoad(i)">
+      <h2>{{ exercise?.name }}</h2>            
+    </button>
+  </ion-list>
 </ion-content>
 

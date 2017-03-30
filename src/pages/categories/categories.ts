@@ -77,7 +77,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
     popover.onDidDismiss(
       data => {
         if (data != null && data.action == 'edit') {
-          this.navCtrl.push(CategoryEditPage, { exercise: this.categories[index], mode: 'Edit'})
+          this.navCtrl.push(CategoryEditPage, { category: this.categories[index], mode: 'Edit'})
         }
       });
 
@@ -85,7 +85,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
 
   // ------------------------------------------------------------------
   onNewCategory() {
-    // this.navCtrl.push(CategoryEditPage, { category: null, mode: 'New'});    
+    this.navCtrl.push(CategoryEditPage, { category: null, mode: 'New'});    
   }
 
   // ----------------------------------------------------------------------------

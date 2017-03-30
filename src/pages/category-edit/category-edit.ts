@@ -1,22 +1,91 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
 
-/*
-  Generated class for the CategoryEdit page.
+import { generateUrl } from '../../shared/generate-url';
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+import { Category } from '../../models/category';
+import { CategoryPage } from '../category/category';
+import { CategoryService } from '../../services/category';
+
 @Component({
   selector: 'page-category-edit',
   templateUrl: 'category-edit.html'
 })
-export class CategoryEditPage {
+export class CategoryEditPage implements OnInit {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  mode = 'New';
+  category: Category;
+  categoryForm: FormGroup;
+  
+  // ----------------------------------------------------------------------
+  constructor(
+      private navCtrl: NavController,
+      private navParams: NavParams, 
+      private viewCtrl: ViewController,
+      private categoryService: CategoryService) {
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CategoryEditPage');
+  }
+
+  // ----------------------------------------------------------------------
+  ngOnInit() {
+    this.mode = this.navParams.get('mode');
+    this.category = this.navParams.get('category');
+    this.initForm(this.mode, this.category);
+  }
+  
+
+  // ----------------------------------------------------------------------
+  ionViewWillEnter() {
+    this.viewCtrl.setBackButtonText('');
+  }
+
+  // ----------------------------------------------------------------------
+  onSubmit() {
+
+    const newCategory = this.categoryForm.value;
+    newCategory.url = generateUrl(newCategory.name);
+
+    if (this.mode == 'Edit') {
+      
+      this.categoryService.updateCategory(this.category.$key, newCategory)
+        .then(
+          () => {
+            this.navCtrl.push(CategoryPage, {workout: newCategory});
+          }
+        )
+        .catch(err => console.log('update failed: ', err));
+
+    } else {
+
+      this.categoryService.createCategory(newCategory)
+        .then(() => this.navCtrl.pop())
+        .catch(err => console.log(err));
+
+    }
+
+  }
+
+  // ----------------------------------------------------------------------
+  onRemove() {
+    this.categoryService.removeCategory(this.category)
+      .then(() => this.navCtrl.popToRoot())
+      .catch(err => console.log(err));
+  }
+
+  // ----------------------------------------------------------------------
+  private initForm(mode: string, cateory: Category) {
+
+    if (mode == 'New') {
+      this.categoryForm = new FormGroup({
+        'name': new FormControl(null, Validators.required)
+      });
+    } else {
+      this.categoryForm = new FormGroup({
+        'name': new FormControl(cateory.name, Validators.required)
+      });
+    }
   }
 
 }
+

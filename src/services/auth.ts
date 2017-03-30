@@ -38,4 +38,5 @@ export class AuthService {
         return firebase.auth().currentUser.updatePassword(newPassword);
     }
 
+
 }

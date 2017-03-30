@@ -42,6 +42,22 @@
             <button 
                 ion-item 
                 icon-left 
+                (click)="onLoad(statsPage)"
+                *ngIf="isAuthenticated">
+                <ion-icon name="stats"></ion-icon>
+                Stats
+            </button>                                                
+            <button 
+                ion-item 
+                icon-left 
+                (click)="onLoad(mePage)"
+                *ngIf="isAuthenticated">
+                <ion-icon name="person"></ion-icon>
+                Me
+            </button>                                                            
+            <button 
+                ion-item 
+                icon-left 
                 (click)="onLoad(loginPage)"
                 *ngIf="!isAuthenticated">
                 <ion-icon name="log-in"></ion-icon>

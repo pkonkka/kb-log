@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { Category } from '../../models/category';
+import { Exercise } from '../../models/exercise';
+
+import { CategoryEditPage } from '../category-edit/category-edit';
+import { ExercisePage } from '../exercise/exercise';
+
 import { CategoryService } from '../../services/category';
 
 @Component({
@@ -11,6 +16,7 @@ import { CategoryService } from '../../services/category';
 export class CategoryPage {
 
   category: Category;
+  exercises: Exercise[];
 
   // -------------------------------------------------------------------------------------
   constructor(
@@ -25,18 +31,20 @@ export class CategoryPage {
     this.viewCtrl.setBackButtonText('');
     this.category = this.navParams.get('category');
 
-    console.log(this.category);
-
+    this.categoryService.findAllExercisesForCategory(this.category.url)
+      .subscribe(
+        exercises => this.exercises = exercises
+      )
   }
 
   // -------------------------------------------------------------------------------------
   onEditCategory() {
-    // this.navCtrl.push(WorkoutEditPage, { workout: this.workout, mode: 'Edit'});    
+    this.navCtrl.push(CategoryEditPage, { category: this.category, mode: 'Edit'});    
   }
 
   // -------------------------------------------------------------------------------------
   onLoad(index: number) {
-    // this.navCtrl.push(ExercisePage, { workout: this.workout, exercise: this.workoutExercises[index]});
+    this.navCtrl.push(ExercisePage, { category: this.category, exercise: this.exercises[index]});
   }
 
 

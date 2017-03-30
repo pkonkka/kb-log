@@ -4,13 +4,15 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import firebase from 'firebase';
 
-import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login/login';
-import { SettingsPage} from '../pages/settings/settings';
-import { SignupPage } from '../pages/signup/signup';
-import { TabsPage } from '../pages/tabs/tabs';
 import { CategoriesPage } from '../pages/categories/categories';
 import { ExercisesPage } from '../pages/exercises/exercises';
+import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
+import { MePage } from '../pages/me/me';
+import { SettingsPage} from '../pages/settings/settings';
+import { SignupPage } from '../pages/signup/signup';
+import { StatsPage } from '../pages/stats/stats';
+import { TabsPage } from '../pages/tabs/tabs';
 import { WorkoutsPage } from '../pages/workouts/workouts';
 
 import { AuthService } from '../services/auth';
@@ -29,8 +31,9 @@ export class MyApp {
   workoutsPage = WorkoutsPage;
   exercisesPage = ExercisesPage;
   categoriesPage = CategoriesPage;
+  statsPage = StatsPage;
+  mePage = MePage;
   
-
   isAuthenticated = false;  
 
   @ViewChild('nav') nav: NavController;

@@ -51,13 +51,7 @@ export class ExercisesPage implements OnInit {
                 .subscribe(
                   (categories: Category[]) => {
 
-                    categories.map(category => {
-                      console.log('1: ', categories);
-                      categories.push(Category.fromJson(category))
-                      console.log('2: ', categories);                      
-                    }); 
-
-                    exercise.categories = categories;
+                  exercise.categories = categories;
     
                   }
                 )
@@ -99,7 +93,6 @@ export class ExercisesPage implements OnInit {
       });
 
   }
-
 
   // ------------------------------------------------------------------
   onNewExercise() {
