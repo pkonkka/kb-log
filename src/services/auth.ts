@@ -9,6 +9,23 @@ export class AuthService {
     }
 
     // ------------------------------------------------------------------
+    getCurrentUserProfile() {
+        const user = firebase.auth().currentUser;
+        
+        if (user) {
+            let userProfile = {
+                name: user.displayName,
+                email: user.email,
+                photoUrl: user.photoURL,
+                emailVerified: user.emailVerified,
+                uid: user.uid
+            }
+            return userProfile;            
+        }
+        return null;
+    }
+
+    // ------------------------------------------------------------------
     login(email: string, password: string): firebase.Promise<any> {
         return firebase.auth().signInWithEmailAndPassword(email, password);
     }

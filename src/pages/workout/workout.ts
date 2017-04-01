@@ -8,6 +8,8 @@ import { ExercisePage } from '../exercise/exercise';
 
 import { Workout } from '../../models/workout';
 import { WorkoutService } from '../../services/workout';
+
+import { AddExercisesPage } from '../add-exercises/add-exercises';
 import { WorkoutEditPage } from '../workout-edit/workout-edit';
 
 @Component({
@@ -50,6 +52,11 @@ export class WorkoutPage implements OnInit, OnDestroy {
   // -------------------------------------------------------------------------------------
   ngOnDestroy() {
     this.workoutSub.unsubscribe();
+  }
+
+  // -------------------------------------------------------------------------------------
+  onAddExercise() {
+    this.navCtrl.push(AddExercisesPage, { workout: this.workout});    
   }
 
   // -------------------------------------------------------------------------------------

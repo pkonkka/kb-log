@@ -1,89 +1,102 @@
-<ion-menu [content]="nav">
+<ion-split-pane>
 
-    <ion-header>
-        <ion-toolbar>
-            <ion-title>Menu</ion-title>
-        </ion-toolbar>
-    </ion-header>
+    <ion-menu [content]="nav">
 
-    <ion-content>
-        <ion-list>
-            <button 
-                ion-item 
-                icon-left 
-                (click)="onLoad(rootPage)"
-                *ngIf="isAuthenticated">
-                <ion-icon name="home" item-left></ion-icon>
-            </button>            
-            <button 
-                ion-item 
-                icon-left 
-                (click)="onLoad(workoutsPage)"
-                *ngIf="isAuthenticated">
-                <ion-icon name="list"></ion-icon>
-                Workouts
-            </button>                                    
-            <button 
-                ion-item 
-                icon-left 
-                (click)="onLoad(exercisesPage)"
-                *ngIf="isAuthenticated">
-                <ion-icon name="body"></ion-icon>
-                Exercises
-            </button>                                                
-            <button 
-                ion-item 
-                icon-left 
-                (click)="onLoad(categoriesPage)"
-                *ngIf="isAuthenticated">
-                <ion-icon name="book"></ion-icon>
-                Categories
-            </button>                                    
-            <button 
-                ion-item 
-                icon-left 
-                (click)="onLoad(statsPage)"
-                *ngIf="isAuthenticated">
-                <ion-icon name="stats"></ion-icon>
-                Stats
-            </button>                                                
-            <button 
-                ion-item 
-                icon-left 
-                (click)="onLoad(mePage)"
-                *ngIf="isAuthenticated">
-                <ion-icon name="person"></ion-icon>
-                Me
-            </button>                                                            
-            <button 
-                ion-item 
-                icon-left 
-                (click)="onLoad(loginPage)"
-                *ngIf="!isAuthenticated">
-                <ion-icon name="log-in"></ion-icon>
-                Login
-            </button>                        
-            <button 
-                ion-item 
-                icon-left 
-                (click)="onLoad(signupPage)"
-                *ngIf="!isAuthenticated">
-                <ion-icon name="person"></ion-icon>
-                Signup
-            </button>                        
-            <button 
-                ion-item 
-                icon-left 
-                (click)="onLogout()"
-                *ngIf="isAuthenticated">
-                <ion-icon name="person"></ion-icon>
-                Logout
-            </button>                        
-            
-        </ion-list>
-    </ion-content>
-</ion-menu>
+        <ion-header>
+            <ion-toolbar>
+                <ion-title>Menu</ion-title>
+            </ion-toolbar>
+        </ion-header>
 
-<ion-nav [root]="tabsPage" #nav></ion-nav>
+        <ion-content>
+            <ion-list>
+                <button 
+                    ion-item 
+                    icon-left 
+                    (click)="onLoad(rootPage)"
+                    *ngIf="isAuthenticated">
+                    <ion-icon name="home" item-left></ion-icon>
+                </button>            
+                <button 
+                    ion-item 
+                    icon-left 
+                    (click)="onLoad(workoutsPage)"
+                    *ngIf="isAuthenticated">
+                    <ion-icon name="list"></ion-icon>
+                    Workouts
+                </button>                                    
+                <button 
+                    ion-item 
+                    icon-left 
+                    (click)="onLoad(exercisesPage)"
+                    *ngIf="isAuthenticated">
+                    <ion-icon name="body"></ion-icon>
+                    Exercises
+                </button>                                                
+                <button 
+                    ion-item 
+                    icon-left 
+                    (click)="onLoad(categoriesPage)"
+                    *ngIf="isAuthenticated">
+                    <ion-icon name="book"></ion-icon>
+                    Categories
+                </button>                                    
+                <button 
+                    ion-item 
+                    icon-left 
+                    (click)="onLoad(statsPage)"
+                    *ngIf="isAuthenticated">
+                    <ion-icon name="stats"></ion-icon>
+                    Stats
+                </button>                          
+                <button 
+                    ion-item 
+                    icon-left 
+                    (click)="onLoad(settingsPage)"
+                    *ngIf="isAuthenticated">
+                    <ion-icon name="settings"></ion-icon>
+                    Settings
+                </button>                                                                                              
+                <button 
+                    ion-item 
+                    icon-left 
+                    (click)="onLoad(mePage)"
+                    *ngIf="isAuthenticated">
+                    <ion-icon name="person"></ion-icon>
+                    Me
+                </button>                                                            
+                <button 
+                    ion-item 
+                    icon-left 
+                    (click)="onLoad(loginPage)"
+                    *ngIf="!isAuthenticated">
+                    <ion-icon name="log-in"></ion-icon>
+                    Login
+                </button>                        
+                <button 
+                    ion-item 
+                    icon-left 
+                    (click)="onLoad(signupPage)"
+                    *ngIf="!isAuthenticated">
+                    <ion-icon name="person"></ion-icon>
+                    Signup
+                </button>                        
+                <button 
+                    ion-item 
+                    icon-left 
+                    (click)="onLogout()"
+                    *ngIf="isAuthenticated">
+                    <ion-icon name="person"></ion-icon>
+                    Logout
+                </button>                        
+                
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+
+    <ion-nav [root]="tabsPage" #nav main></ion-nav>
+
+</ion-split-pane>
+
 
 <!--<ion-nav [root]="rootPage" #nav></ion-nav>-->

@@ -96,7 +96,7 @@ export class ExercisesPage implements OnInit {
 
   // ------------------------------------------------------------------
   onNewExercise() {
-    this.navCtrl.push(ExerciseEditPage);
+    this.navCtrl.push(ExerciseEditPage, { execise: null, mode: 'New'});
   }
 
   // ----------------------------------------------------------------------------

@@ -77,10 +77,10 @@ export class ExerciseEditPage implements OnInit {
   private initForm(mode: string, exercise: Exercise) {
 
     if (mode == 'New') {
-
+      
       this.exerciseForm = new FormGroup({
         'name': new FormControl(null, Validators.required),
-        'description': new FormControl(null, Validators.required)
+        'note': new FormControl(null, Validators.required)
         // 'difficulty': new FormControl(this.selectOptions[1], Validators.required),
         // 'ingredients': new FormArray([])
       });

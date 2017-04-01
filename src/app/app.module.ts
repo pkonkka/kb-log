@@ -11,6 +11,8 @@ import { TestComponent } from '../components/test';
 
 // pages
 import { MyApp } from './app.component';
+import { AddCategoriesPage } from '../pages/add-categories/add-categories';
+import { AddExercisesPage } from '../pages/add-exercises/add-exercises';
 import { CategoriesPage } from '../pages/categories/categories';
 import { CategoryEditPage } from '../pages/category-edit/category-edit';
 import { CategoryPage } from '../pages/category/category';
@@ -46,6 +48,8 @@ import { WorkoutService } from '../services/workout';
 @NgModule({
   declarations: [
     MyApp,
+    AddCategoriesPage,
+    AddExercisesPage,
     CategoriesPage,
     CategoryEditPage,
     CategoryPage,
@@ -78,6 +82,8 @@ import { WorkoutService } from '../services/workout';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    AddCategoriesPage,
+    AddExercisesPage,    
     HomePage,
     WorkoutsPage,
     WorkoutEditPage,
