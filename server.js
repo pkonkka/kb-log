@@ -1,11 +1,10 @@
-const express = require('express');
+var express = require('express'),
 
-const port = process.env.PORT || 3000;
-var app = express();
-
+app = express();
 app.use(express.static('www'));
+app.set('port', process.env.PORT || 5000);
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+app.listen(app.get('port'), function () {
+    console.log('Express server listening on port ' + app.get('port'));
 });
 
