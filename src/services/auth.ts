@@ -1,4 +1,8 @@
-
+// ----------------------------------------------------------------------
+//
+//  Firebase authentication service
+//
+// ----------------------------------------------------------------------
 import firebase from 'firebase';
 
 export class AuthService {
@@ -36,6 +40,12 @@ export class AuthService {
     }
 
     // ------------------------------------------------------------------
+    sendEmailVerification(): firebase.Promise<any> {
+        const user= firebase.auth().currentUser;
+        return user.sendEmailVerification();
+    }
+
+    // ------------------------------------------------------------------
     sendPasswordResetEmail(email: string): firebase.Promise<any> {
         return firebase.auth().sendPasswordResetEmail(email);
     }
@@ -53,6 +63,18 @@ export class AuthService {
     // ------------------------------------------------------------------
     updatePassword(newPassword: string): firebase.Promise<any> {
         return firebase.auth().currentUser.updatePassword(newPassword);
+    }
+
+    // ------------------------------------------------------------------
+    updateProfile(displayName: string, photoUrl: string): firebase.Promise<any> {
+
+        const user = firebase.auth().currentUser;      
+   
+        return user.updateProfile({
+            displayName: displayName,
+            photoURL: photoUrl
+        });
+
     }
 
 
