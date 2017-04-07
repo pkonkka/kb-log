@@ -2,6 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertController, LoadingController, NavController, PopoverController } from 'ionic-angular';
 import { Subscription } from 'rxjs/Rx';
 
+import * as _ from 'lodash';
+import * as moment from 'moment';
+
 import { WorkoutPage } from '../workout/workout';
 import { WorkoutEditPage } from '../workout-edit/workout-edit';
 import { WorkoutsOptionsPage } from '../workouts-options/workouts-options';
@@ -18,7 +21,9 @@ import { AuthService } from '../../services/auth';
 export class WorkoutsPage implements OnInit, OnDestroy {
 
   workouts: Workout[] = [];
+  filtered: Workout[] = [];
   workoutSub: Subscription;
+  isAscSorted = false;
 
   // ------------------------------------------------------------------
   constructor(
@@ -32,7 +37,7 @@ export class WorkoutsPage implements OnInit, OnDestroy {
 
   // ------------------------------------------------------------------
   ngOnInit() {
-
+    
     const loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
@@ -43,7 +48,11 @@ export class WorkoutsPage implements OnInit, OnDestroy {
         (list: Workout[]) => {
           loading.dismiss();
           if (list) {
-            this.workouts = list;
+            this.workouts = this.filtered = list;
+            this.sortByDate();
+            console.log(this.workouts);
+            console.log(moment().diff(this.workouts[0].modifiedAt));
+
           } else {
             this.workouts = [];
           }
@@ -54,7 +63,55 @@ export class WorkoutsPage implements OnInit, OnDestroy {
         }
       )
   }
-  
+
+
+
+  // -----------------------------------------------------------------------------------------------------------------------
+  sortByDate() {
+    this.filtered =  _.sortBy(this.filtered, [function(o) { return o.modifiedAt; }]);
+    this.filtered = _.reverse(this.filtered);
+    this.workouts = this.filtered;
+  }
+
+
+  // // -----------------------------------------------------------------------------------------------------------------------
+  // toggleSearch() {
+  //   if (this.showSearch) {
+  //     this.showSearch = false;
+  //   } else {
+  //     this.showSearch = true;
+  //   }
+  // }
+
+
+  // -----------------------------------------------------------------------------------------------------------------------
+  search(search: string) {
+
+    this.filtered = this.workouts.filter(function (workout) {
+
+      let description = workout.description.toLowerCase();
+      let name = workout.name.toLowerCase();
+      search = search.toLowerCase();
+      let retval = name.includes(search) || description.includes(search);
+
+      return retval;
+    });
+
+  }
+
+  // -----------------------------------------------------------------------------------------------------------------------
+  sortAlphaAsc() {
+    this.filtered =  _.sortBy(this.filtered, [function(o) { return o.name; }]);
+    this.isAscSorted = true;
+  }
+
+  // -----------------------------------------------------------------------------------------------------------------------
+  sortAlphaDesc() {
+    this.filtered =  _.sortBy(this.filtered, [function(o) { return o.name; }]);
+    this.filtered = _.reverse(this.filtered);
+    this.isAscSorted = false;
+  }
+
   // -------------------------------------------------------------
   ngOnDestroy() {
     this.workoutSub.unsubscribe();
